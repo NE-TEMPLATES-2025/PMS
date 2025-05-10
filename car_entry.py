@@ -26,14 +26,14 @@ if not os.path.exists(csv_file):
 def detect_arduino_port():
     ports = list(serial.tools.list_ports.comports())
     for port in ports:
-        if "ttyAC" in port.device or "ttyACM0" in port.device:
+        if "/dev/ttyACM0" in port.device:
             return port.device
     return None
 
 arduino_port = detect_arduino_port()
 if arduino_port:
     print(f"[CONNECTED] Arduino on {arduino_port}")
-    arduino = serial.Serial(arduino_port, 9600, timeout=1)
+    arduino = serial.Serial("/dev/ttyACM0", 9600, timeout=1)
     time.sleep(2)
 else:
     print("[ERROR] Arduino not detected.")
